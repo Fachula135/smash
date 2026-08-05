@@ -27,7 +27,7 @@ const state = {
 let QUESTIONS = [];
 
 // ---------------- Carga de preguntas ----------------
-fetch("preguntas.json")
+fetch("preguntasbis.json")
   .then((r) => r.json())
   .then((data) => {
     QUESTIONS = data.preguntas;
