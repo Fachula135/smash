@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Impostor Numérico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ PANTALLA: PORTADA / SETUP ============ -->
+  <section id="screen-setup" class="screen active">
+    <header class="brand">
+      <span class="brand-chip">N°</span>
+      <h1>Impostor<br>Numérico</h1>
+      <p class="brand-sub">Un impostor por mesa. Un número por bocho.</p>
+    </header>
+
+    <form id="setup-form" class="setup-card">
+
+      <div class="field">
+        <label>Jugadores <span class="field-value" id="players-value">6</span></label>
+        <div class="stepper">
+          <button type="button" class="stepper-btn" data-step="players" data-dir="-1">−</button>
+          <input type="range" id="players-range" min="3" max="20" value="6" step="1">
+          <button type="button" class="stepper-btn" data-step="players" data-dir="1">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Impostores</label>
+        <div class="pill-group" id="impostors-group">
+          <button type="button" class="pill active" data-impostors="1">1</button>
+          <button type="button" class="pill" data-impostors="2">2</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Dificultad del impostor</label>
+        <div class="pill-group pill-group-3" id="difficulty-group">
+          <button type="button" class="pill" data-difficulty="relajado">😌 Relajado</button>
+          <button type="button" class="pill active" data-difficulty="clasico">🎭 Clásico</button>
+          <button type="button" class="pill" data-difficulty="caos">🔥 Caos</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Categorías</label>
+        <div class="pill-group pill-group-wrap" id="category-group">
+          <button type="button" class="pill active" data-category="todas">Todas</button>
+          <button type="button" class="pill" data-category="general">General</button>
+          <button type="button" class="pill" data-category="amigos">Amigos</button>
+          <button type="button" class="pill" data-category="escuela">Escuela</button>
+          <button type="button" class="pill" data-category="futbol">Fútbol</button>
+          <button type="button" class="pill" data-category="otros">Otros</button>
+        </div>
+      </div>
+
+      <p id="setup-error" class="setup-error" hidden></p>
+
+      <button type="submit" class="btn btn-primary btn-big">Siguiente: nombres 👤</button>
+    </form>
+  </section>
+
+  <!-- ============ PANTALLA: NOMBRES DE JUGADORES ============ -->
+  <section id="screen-names" class="screen">
+    <header class="brand brand-compact">
+      <h1 class="names-title">¿Quiénes juegan?</h1>
+      <p class="brand-sub">Así van a aparecer en pantalla en su turno.</p>
+    </header>
+    <form id="names-form" class="names-card">
+      <div id="names-list" class="names-list">
+        <!-- inputs generados por JS según cantidad de jugadores -->
+      </div>
+      <p id="names-error" class="setup-error" hidden></p>
+      <button type="submit" class="btn btn-primary btn-big">Repartir roles 🎲</button>
+    </form>
+  </section>
+
+  <!-- ============ PANTALLA: PASAR TELÉFONO ============ -->
+  <section id="screen-pass" class="screen">
+    <div class="pass-card">
+      <div class="pass-emoji">📱</div>
+      <p class="pass-text">Pasá el teléfono a</p>
+      <h2 id="pass-name">Jugador 2</h2>
+      <button id="pass-continue" class="btn btn-primary btn-big">Listo, soy yo</button>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: REVELAR ROL (tapado) ============ -->
+  <section id="screen-reveal-intro" class="screen">
+    <div class="reveal-card">
+      <h2 id="reveal-name">Jugador 1, tu turno</h2>
+      <button id="reveal-tap" class="token-tap" aria-label="Tocar para revelar">
+        <span class="token-tap-icon">🎴</span>
+        <span class="token-tap-label">Tocar para revelar</span>
+      </button>
+      <p class="reveal-hint">Que nadie más mire la pantalla 👀</p>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: ROL + NÚMERO (misma instancia) ============ -->
+  <section id="screen-reveal-content" class="screen">
+    <div class="role-card" id="role-card">
+      <!-- se llena por JS: rol (normal/impostor) + input de número + botón -->
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: RESULTADOS ============ -->
+  <section id="screen-results" class="screen">
+    <div class="results-card">
+      <h2 class="results-title">Los números</h2>
+      <p class="results-sub">Defiendan sus respuestas antes de votar</p>
+
+      <ul id="results-list" class="results-list"></ul>
+
+      <div id="question-reveal-box" class="question-reveal-box" hidden>
+        <p class="reveal-eyebrow">La pregunta real era</p>
+        <p id="question-reveal-text" class="question-reveal-text"></p>
+      </div>
+
+      <button id="reveal-question-btn" class="btn btn-primary btn-big">🎭 Revelar pregunta</button>
+      <button id="end-game-btn" class="btn btn-ghost btn-big" hidden>Terminar juego</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
